@@ -1,0 +1,4 @@
+% DCT on a Framefunction idctF = idct(DCTFrame,T,mask)  dim = size(DCTFrame);  idctF = zeros(dim);  if dim(1)/8 ~= round(dim(1)/8),    error ("idct: the number of lines must be divisible by 8");  endif
+    LinesBlocks = dim(1)/8;    if dim(2)/8 ~= round(dim(2)/8),    error ("idct: the number of columns must be divisible by 8");  endif      ColumnsBlocks = dim(2)/8;    for i=1:LinesBlocks,    for j=1:ColumnsBlocks,      block = DCTFrame((i-1)*8+1:(i-1)*8+8,(j-1)*8+1:(j-1)*8+8).*mask;      idctb = idctblock(block,T);      idctF((i-1)*8+1:(i-1)*8+8,(j-1)*8+1:(j-1)*8+8) =  idctb;    endfor
+  endfor
+  endfunction% IDCT on a blockfunction idctb = idctblock(block, T)  idctb = T' * block * T;endfunction
